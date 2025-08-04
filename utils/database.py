@@ -7,7 +7,7 @@ with support for both PostgreSQL and SQLite fallback.
 
 import os
 import logging
-from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, MetaData
+from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, MetaData, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
 from datetime import datetime
@@ -55,7 +55,7 @@ def get_database_connection():
             
             # Test connection
             with engine.connect() as conn:
-                conn.execute("SELECT 1")
+                conn.execute(text("SELECT 1"))
             
             logger.info("PostgreSQL connection successful")
             
@@ -86,7 +86,7 @@ def get_database_connection():
             
             # Test connection
             with engine.connect() as conn:
-                conn.execute("SELECT 1")
+                conn.execute(text("SELECT 1"))
             
             logger.info("PostgreSQL connection successful")
             
