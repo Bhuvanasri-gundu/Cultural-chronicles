@@ -8,6 +8,7 @@ India's cultural heritage through digital storytelling.
 Author: Cultural Chronicles Team
 Date: January 2025
 """
+# app.py
 
 import os
 import streamlit as st
