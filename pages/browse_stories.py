@@ -182,30 +182,30 @@ def show_browse_stories():
         
         with col1:
             if current_page > 1:
-                if st.button("⏮️ First", use_container_width=True):
-                    st.session_state.page_number = 1
-                    st.rerun()
+                st.markdown(f"<div style='text-align: center; padding: 0.5rem;'>⏮️ First</div>", unsafe_allow_html=True)
+            else:
+                st.empty()
         
         with col2:
             if current_page > 1:
-                if st.button("◀️ Previous", use_container_width=True):
-                    st.session_state.page_number = current_page - 1
-                    st.rerun()
+                st.markdown(f"<div style='text-align: center; padding: 0.5rem;'>◀️ Previous</div>", unsafe_allow_html=True)
+            else:
+                st.empty()
         
         with col3:
             st.markdown(f"<div style='text-align: center; padding: 0.5rem;'>Page {current_page} of {total_pages}</div>", unsafe_allow_html=True)
         
         with col4:
             if current_page < total_pages:
-                if st.button("Next ▶️", use_container_width=True):
-                    st.session_state.page_number = current_page + 1
-                    st.rerun()
+                st.markdown(f"<div style='text-align: center; padding: 0.5rem;'>Next ▶️</div>", unsafe_allow_html=True)
+            else:
+                st.empty()
         
         with col5:
             if current_page < total_pages:
-                if st.button("Last ⏭️", use_container_width=True):
-                    st.session_state.page_number = total_pages
-                    st.rerun()
+                st.markdown(f"<div style='text-align: center; padding: 0.5rem;'>Last ⏭️</div>", unsafe_allow_html=True)
+            else:
+                st.empty()
     
     # Summary statistics at bottom
     st.markdown("---")
