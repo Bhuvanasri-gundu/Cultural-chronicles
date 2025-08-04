@@ -162,15 +162,10 @@ def show_submit_story():
                         # Clear cache to reflect new data
                         st.cache_resource.clear()
                         
-                        # Suggest next actions
+                        # Show success message with next actions as info
                         st.markdown("### 🎯 What's Next?")
-                        col1, col2 = st.columns(2)
-                        with col1:
-                            if st.button("📚 Browse All Stories", use_container_width=True):
-                                st.switch_page("pages/browse_stories.py")
-                        with col2:
-                            if st.button("🔍 Search Stories", use_container_width=True):
-                                st.switch_page("app.py")  # This will redirect to search
+                        st.info("📚 Visit the Browse Stories page to see your story in the archive")
+                        st.info("🔍 Use the Search page to find stories by keywords or language")
                         
                     else:
                         st.error("❌ Failed to save story. Please try again.")
@@ -178,6 +173,23 @@ def show_submit_story():
                 except Exception as e:
                     st.error(f"❌ Error processing story: {str(e)}")
                     st.info("💡 Please check your input and try again.")
+
+    # Navigation buttons outside the form
+    st.markdown("---")
+    st.markdown("### 🧭 Quick Navigation")
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        if st.button("🏠 Home", use_container_width=True):
+            st.switch_page("app.py")
+    
+    with col2:
+        if st.button("📚 Browse Stories", use_container_width=True):
+            st.switch_page("pages/browse_stories.py")
+    
+    with col3:
+        if st.button("🔍 Search", use_container_width=True):
+            st.switch_page("app.py")
 
     # Help section
     with st.expander("ℹ️ Need Help?", expanded=False):
