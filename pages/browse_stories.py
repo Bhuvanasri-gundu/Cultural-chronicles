@@ -117,15 +117,25 @@ def show_browse_stories():
     stories_per_page = 5
     total_pages = (total_stories - 1) // stories_per_page + 1
     
+    # Get current page from query parameters or default to 1
+    try:
+        current_page = int(st.query_params.get("page", "1"))
+        current_page = max(1, min(current_page, total_pages))
+    except (ValueError, TypeError):
+        current_page = 1
+    
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        current_page = st.number_input(
+        new_page = st.number_input(
             f"Page (1-{total_pages})",
             min_value=1,
             max_value=total_pages,
-            value=1,
-            key="page_number"
+            value=current_page,
+            key="page_input"
         )
+        if new_page != current_page:
+            st.query_params.page = str(new_page)
+            st.rerun()
     
     # Calculate pagination bounds
     start_idx = (current_page - 1) * stories_per_page
@@ -182,13 +192,17 @@ def show_browse_stories():
         
         with col1:
             if current_page > 1:
-                st.markdown(f"<div style='text-align: center; padding: 0.5rem;'>⏮️ First</div>", unsafe_allow_html=True)
+                if st.button("⏮️ First", key=f"first_page_{current_page}", use_container_width=True):
+                    st.query_params.page = "1"
+                    st.rerun()
             else:
                 st.empty()
         
         with col2:
             if current_page > 1:
-                st.markdown(f"<div style='text-align: center; padding: 0.5rem;'>◀️ Previous</div>", unsafe_allow_html=True)
+                if st.button("◀️ Previous", key=f"prev_page_{current_page}", use_container_width=True):
+                    st.query_params.page = str(current_page - 1)
+                    st.rerun()
             else:
                 st.empty()
         
@@ -197,13 +211,17 @@ def show_browse_stories():
         
         with col4:
             if current_page < total_pages:
-                st.markdown(f"<div style='text-align: center; padding: 0.5rem;'>Next ▶️</div>", unsafe_allow_html=True)
+                if st.button("Next ▶️", key=f"next_page_{current_page}", use_container_width=True):
+                    st.query_params.page = str(current_page + 1)
+                    st.rerun()
             else:
                 st.empty()
         
         with col5:
             if current_page < total_pages:
-                st.markdown(f"<div style='text-align: center; padding: 0.5rem;'>Last ⏭️</div>", unsafe_allow_html=True)
+                if st.button("Last ⏭️", key=f"last_page_{current_page}", use_container_width=True):
+                    st.query_params.page = str(total_pages)
+                    st.rerun()
             else:
                 st.empty()
     
