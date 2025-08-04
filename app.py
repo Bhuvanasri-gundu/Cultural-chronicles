@@ -42,7 +42,7 @@ def initialize_fast_app():
     if data_manager:
         try:
             stories = data_manager.get_all_stories()
-            if stories.empty:
+            if len(stories) == 0:
                 from sample_data import create_sample_data
                 create_sample_data()
         except Exception as e:
