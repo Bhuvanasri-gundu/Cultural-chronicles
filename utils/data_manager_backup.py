@@ -1,5 +1,5 @@
 """
-Data Manager - Cultural Chronicles (Fixed)
+Data Manager - Cultural Chronicles
 
 This module handles all database operations for story management including
 CRUD operations, search functionality, and statistics generation.
@@ -71,13 +71,6 @@ class DataManager:
         finally:
             session.close()
     
-    def _format_timestamp(self, timestamp):
-        """Helper method to safely format timestamp"""
-        try:
-            return timestamp.isoformat() if timestamp is not None else None
-        except (AttributeError, TypeError):
-            return None
-    
     def get_all_stories(self):
         """
         Retrieve all stories from the database
@@ -104,7 +97,7 @@ class DataManager:
                     'story_type': story.story_type,
                     'language_hint': story.language_hint,
                     'image_path': story.image_path,
-                    'timestamp': self._format_timestamp(story.timestamp)
+                    'timestamp': story.timestamp.isoformat() if story.timestamp else None
                 })
             
             return pd.DataFrame(data)
@@ -173,7 +166,7 @@ class DataManager:
                     'story_type': story.story_type,
                     'language_hint': story.language_hint,
                     'image_path': story.image_path,
-                    'timestamp': self._format_timestamp(story.timestamp)
+                    'timestamp': story.timestamp.isoformat() if story.timestamp else None
                 })
             
             return pd.DataFrame(data)
@@ -211,7 +204,7 @@ class DataManager:
                     'detected_language': story.detected_language,
                     'category': story.category,
                     'region': story.region,
-                    'timestamp': self._format_timestamp(story.timestamp)
+                    'timestamp': story.timestamp.isoformat() if story.timestamp else None
                 })
             
             return pd.DataFrame(data)
@@ -244,25 +237,26 @@ class DataManager:
             stories_with_images = session.query(Story).filter(Story.image_path.isnot(None)).count()
             
             # Recent languages (last 10 stories)
-            recent_stories = session.query(Story.detected_language)\
+            recent_languages_query = session.query(Story.detected_language)\
+                .filter(Story.detected_language.isnot(None))\
                 .order_by(Story.timestamp.desc())\
-                .limit(10).all()
+                .limit(20).all()
             
-            recent_languages = list(set([story[0] for story in recent_stories if story[0]]))
+            recent_languages = list(set([lang[0] for lang in recent_languages_query if lang[0]]))
             
             return {
-                'total_stories': total_stories,
-                'unique_languages': unique_languages,
-                'stories_with_images': stories_with_images,
-                'recent_languages': recent_languages
+                "total_stories": total_stories,
+                "unique_languages": unique_languages,
+                "stories_with_images": stories_with_images,
+                "recent_languages": recent_languages[:5]  # Top 5 recent languages
             }
             
         except SQLAlchemyError as e:
             logger.error(f"Database error retrieving statistics: {str(e)}")
-            return {'total_stories': 0, 'unique_languages': 0, 'stories_with_images': 0, 'recent_languages': []}
+            return {"total_stories": 0, "unique_languages": 0, "stories_with_images": 0, "recent_languages": []}
         except Exception as e:
             logger.error(f"Unexpected error retrieving statistics: {str(e)}")
-            return {'total_stories': 0, 'unique_languages': 0, 'stories_with_images': 0, 'recent_languages': []}
+            return {"total_stories": 0, "unique_languages": 0, "stories_with_images": 0, "recent_languages": []}
         finally:
             session.close()
     
@@ -293,7 +287,7 @@ class DataManager:
                     'story_type': story.story_type,
                     'language_hint': story.language_hint,
                     'image_path': story.image_path,
-                    'timestamp': self._format_timestamp(story.timestamp)
+                    'timestamp': story.timestamp.isoformat() if story.timestamp else None
                 }
             
             return None
