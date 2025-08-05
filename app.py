@@ -237,17 +237,22 @@ def show_search():
                             st.markdown("**📝 Original Story:**")
                             st.write(story['original_text'][:300] + "..." if len(story['original_text']) > 300 else story['original_text'])
                             
-                            if pd.notna(story.get('translated_text')):
+                            translated_text = story.get('translated_text')
+                            if translated_text is not None and not pd.isna(translated_text) and str(translated_text).strip():
                                 st.markdown("**🌐 English Translation:**")
-                                st.write(story['translated_text'][:300] + "..." if len(story['translated_text']) > 300 else story['translated_text'])
+                                translated_text_str = str(translated_text)
+                                st.write(translated_text_str[:300] + "..." if len(translated_text_str) > 300 else translated_text_str)
                         
                         with col2:
                             st.markdown(f'<div class="stat-card" style="margin: 0.2rem 0; padding: 0.5rem; text-align: left;"><strong>🌍 Language:</strong> {story["detected_language"]}</div>', unsafe_allow_html=True)
                             st.markdown(f'<div class="stat-card" style="margin: 0.2rem 0; padding: 0.5rem; text-align: left;"><strong>📂 Category:</strong> {story.get("category", "Unknown")}</div>', unsafe_allow_html=True)
-                            st.markdown(f'<div class="stat-card" style="margin: 0.2rem 0; padding: 0.5rem; text-align: left;"><strong>📅 Date:</strong> {story.get("timestamp", "Unknown")[:10]}</div>', unsafe_allow_html=True)
+                            timestamp = story.get("timestamp", "Unknown")
+                            display_date = str(timestamp)[:10] if timestamp != "Unknown" else "Unknown"
+                            st.markdown(f'<div class="stat-card" style="margin: 0.2rem 0; padding: 0.5rem; text-align: left;"><strong>📅 Date:</strong> {display_date}</div>', unsafe_allow_html=True)
                             
-                            if pd.notna(story.get('image_path')) and os.path.exists(story['image_path']):
-                                st.image(story['image_path'], width=150)
+                            image_path = story.get('image_path')
+                            if image_path is not None and not pd.isna(image_path) and str(image_path).strip() and os.path.exists(str(image_path)):
+                                st.image(str(image_path), width=150)
             else:
                 st.info("🔍 No stories found matching your search criteria. Try different keywords or search type.")
         except Exception as e:
