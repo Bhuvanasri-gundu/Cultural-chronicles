@@ -108,8 +108,8 @@ def main():
         st.markdown("### 🌟 Navigation")
         selected = option_menu(
             "Heritage Hub",
-            ["Home", "Search"],
-            icons=["house-heart", "search-heart"],
+            ["Home", "Submit Story", "Browse Stories", "Search"],
+            icons=["house-heart", "journal-plus", "book-half", "search-heart"],
             menu_icon="gems",
             default_index=0,
             styles={
@@ -122,6 +122,12 @@ def main():
     
     if selected == "Home":
         show_home()
+    elif selected == "Submit Story":
+        from pages.submit_story import show_submit_story
+        show_submit_story()
+    elif selected == "Browse Stories":
+        from pages.browse_stories import show_browse_stories
+        show_browse_stories()
     elif selected == "Search":
         show_search()
 

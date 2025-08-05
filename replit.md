@@ -8,13 +8,6 @@ Cultural Chronicles is an AI-powered Streamlit web application designed to prese
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Changes (January 2025)
-
-- **Navigation Optimization**: Removed non-functional "Submit Story" and "Browse Stories" navigation options, keeping only "Home" and "Search" which are fully functional
-- **UI Cleanup**: Removed non-working "Submit Your Story" button from browse stories page 
-- **Performance Enhancement**: Added comprehensive development configuration files for better developer experience
-- **Low Network Optimization**: Extended caching system (1-2 hours TTL) for improved performance on slow connections
-
 ## System Architecture
 
 ### Frontend Architecture
