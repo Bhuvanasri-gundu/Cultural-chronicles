@@ -26,7 +26,9 @@ def show_browse_stories():
     try:
         all_stories = dm.get_all_stories()
         if all_stories.empty:
-            st.info("📭 No stories found in the archive.")
+            st.info("📭 No stories found in the archive. Be the first to submit a story!")
+            if st.button("➕ Submit Your Story", type="primary"):
+                st.switch_page("pages/submit_story.py")
             return
     except Exception as e:
         st.error(f"❌ Failed to load stories: {str(e)}")
