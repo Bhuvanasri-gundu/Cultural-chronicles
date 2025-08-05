@@ -247,8 +247,4 @@ def show_browse_stories():
         stories_with_images = filtered_stories['image_path'].notna().sum()
         st.metric("🖼️ With Images", stories_with_images)
     
-    # Quick actions
-    st.markdown("### 🚀 Quick Actions")
-    
-    if st.button("🔍 Search Stories", use_container_width=True):
-        st.switch_page("app.py")  # This will redirect to search in main app
+
