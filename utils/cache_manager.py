@@ -14,8 +14,10 @@ from typing import Optional, Dict, Any
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Cache configuration
-CACHE_TTL = 300  # 5 minutes cache TTL
+# Cache configuration for low network optimization
+CACHE_TTL = 3600  # 1 hour cache TTL for low network
+LONG_CACHE_TTL = 7200  # 2 hours for static data
+SEARCH_CACHE_SIZE = 100  # Cache up to 100 recent searches
 
 @st.cache_resource(ttl=CACHE_TTL)
 def get_fast_data_manager():
@@ -34,7 +36,7 @@ def get_fast_data_manager():
         logger.error(f"Failed to cache data manager: {str(e)}")
         return None
 
-@st.cache_data(ttl=CACHE_TTL)
+@st.cache_data(ttl=LONG_CACHE_TTL)
 def get_cached_statistics() -> Dict[str, Any]:
     """
     Get cached archive statistics for ultra-fast dashboard loading
@@ -121,7 +123,7 @@ def get_cached_search_results(query: str, search_type: str = "all") -> Optional[
         logger.error(f"Failed to cache search results: {str(e)}")
         return pd.DataFrame()
 
-@st.cache_data(ttl=CACHE_TTL)
+@st.cache_data(ttl=LONG_CACHE_TTL)
 def get_cached_filter_options() -> Dict[str, list]:
     """
     Get cached filter options for fast filter population
