@@ -103,7 +103,8 @@ def show_browse_stories():
         sort_column = 'region'
     
     ascending = sort_order == "Ascending"
-    filtered_stories = filtered_stories.sort_values(by=sort_column, ascending=ascending, na_position='last')
+    if isinstance(filtered_stories, pd.DataFrame):
+        filtered_stories = filtered_stories.sort_values(by=sort_column, ascending=ascending, na_position='last')
     
     # Display results count
     total_stories = len(filtered_stories)
@@ -236,11 +237,11 @@ def show_browse_stories():
     
     with col2:
         unique_languages = filtered_stories['detected_language'].nunique()
-        st.metric("🌍 Languages", unique_languages)
+        st.metric("🌍 Languages", int(unique_languages))
     
     with col3:
         unique_categories = filtered_stories['category'].nunique()
-        st.metric("📂 Categories", unique_categories)
+        st.metric("📂 Categories", int(unique_categories))
     
     with col4:
         stories_with_images = filtered_stories['image_path'].notna().sum()
@@ -248,12 +249,6 @@ def show_browse_stories():
     
     # Quick actions
     st.markdown("### 🚀 Quick Actions")
-    col1, col2 = st.columns(2)
     
-    with col1:
-        if st.button("➕ Submit New Story", type="primary", use_container_width=True):
-            st.switch_page("pages/submit_story.py")
-    
-    with col2:
-        if st.button("🔍 Search Stories", use_container_width=True):
-            st.switch_page("app.py")  # This will redirect to search in main app
+    if st.button("🔍 Search Stories", use_container_width=True):
+        st.switch_page("app.py")  # This will redirect to search in main app
