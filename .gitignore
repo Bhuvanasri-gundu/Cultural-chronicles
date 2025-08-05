@@ -92,7 +92,6 @@ htmlcov/
 .ipynb_checkpoints
 
 # Package managers
-uv.lock
 Pipfile.lock
 
 # Replit specific
