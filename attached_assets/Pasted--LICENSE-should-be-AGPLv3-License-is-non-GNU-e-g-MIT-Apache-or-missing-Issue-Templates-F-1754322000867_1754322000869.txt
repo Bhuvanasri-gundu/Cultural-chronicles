@@ -1,0 +1,72 @@
+❌ LICENSE should be AGPLv3 — License is non-GNU (e.g., MIT/Apache) or missing
+
+❌ Issue Templates Folder (.gitlab/issue_templates)
+
+❌ Issue Template Files: 0 file(s) (None)
+
+❌ Merge Request Templates Folder (.gitlab/merge_request_templates)
+
+❌ Merge Request Template Files: 0 file(s) (None)
+
+3. ⚙️ Project Configuration
+Click to view details
+
+❌ .gitignore
+
+✅ pyproject.toml
+
+✅ uv.lock
+
+4. 🖥️ IDE Setup
+Click to view details
+
+❌ .vscode/settings.json
+
+❌ Ruff in .vscode/extensions.json
+
+❌ .vscode/extensions.json
+
+❌ .vscode/launch.json
+
+❌ .vscode/tasks.json
+
+📌 Suggestions for Missing Items
+❌ LICENSE is not AGPLv3 — Ensure the license is AGPLv3. Replace MIT/Apache with AGPLv3 for compliance.
+
+0
+Recommended file structure inside .gitlab/ directory
+
+❌ Issue templates folder missing — Create .gitlab/issue_templates/ and add .md templates like Bug.md, Documentation.md, or Default.md.
+
+0
+❌ Merge request templates folder missing — Create .gitlab/merge_request_templates/ and add MR templates like Bug.md, Documentation.md, or Default.md.
+
+0
+❌ .gitignore missing — Add a .gitignore file to specify untracked files to ignore in your repository.
+
+0
+❌ .vscode/settings.json missing — Add a .vscode/settings.json file to configure editor settings for consistency across contributors.
+
+0
+❌ Ruff not in .vscode/extensions.json — Add charliermarsh.ruff to .vscode/extensions.json under recommendations to enforce Ruff linter usage.
+
+❌ .vscode/extensions.json missing — Add a .vscode/extensions.json file to configure recommended VSCode extensions.
+
+❌ .vscode/launch.json missing — Add a .vscode/launch.json file to configure debug launch profiles in VSCode.
+
+❌ .vscode/tasks.json missing — Add a .vscode/tasks.json file to define custom tasks for build, lint, or deployment.
+
+❌ Project description missing — Provide a meaningful project description in GitLab settings.
+
+0
+❌ Project tags missing — Tag your project releases for version control and clarity.
+
+0
+📖 Documentation for Missing Configuration Files
+Why these files matter
+
+.vscode/settings.json – Workspace-specific editor settings including linters and interpreter.
+Ruff in .vscode/extensions.json – Recommend Ruff extension for linting.
+.vscode/extensions.json – Recommend essential extensions.
+.vscode/launch.json – Define debug profiles.
+.vscode/tasks.json – Automate common tasks.
